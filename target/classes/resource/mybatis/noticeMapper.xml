@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.todo.repository.NoticeDao">
+	<resultMap type="notice" id="noticeResult"></resultMap>
+
+	<select id="getTotalCntN" resultType="int">
+		select count(no) as cnt from notice
+	</select>
+
+	<select id="getListN" parameterType="noticesch" resultMap="noticeResult">
+		Select A.*
+			 from ( select no, title, writer, date_format(dday, '%Y-%m-%d') as dday from notice n limit #{start},#{pageSize}
+				  ) A inner join  notice B on A.no = B.no 
+				 	order by B.no desc
+	</select>
+	
+	<select id="detailViewN" parameterType="notice" resultType="notice">
+		
+		SELECT a.* FROM notice a INNER JOIN notice b ON a.no= b.no
+					WHERE a.no =#{no}
+	
+	</select>
+</mapper>

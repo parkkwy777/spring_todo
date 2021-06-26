@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<context:component-scan base-package="spring.todo">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+			<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+
+
+
+ 	<context:property-placeholder location="classpath:/resource/properties/info2"/>
+   
+	 <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
+	      destroy-method="close">
+	      <property name="driverClassName" value="${driver}"/>
+	      <property name="url" value="${url}"/>
+	      <property name="username" value="${user}"/>
+	      <property name="password" value="${pass}"/>
+	 </bean>
+
+	  <bean id="sqlSessionFactory" 
+	      class="org.mybatis.spring.SqlSessionFactoryBean">
+	      <property name="dataSource" ref="dataSource"/>
+	      <property name="configLocation" 
+	         value="classpath:/resource/mybatis/spring.xml"/>
+	   </bean>   
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="spring.todo.repository"/>
+	</bean>       
+
+	<!-- 트렌젝션 -->
+	<bean id="transactionManager"
+			class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource" />
+	</bean>
+	<tx:annotation-driven />
+ 	
+ 	<mvc:resources location="/static/" mapping="/static/**" />
+ 	<mvc:resources location="/upload/" mapping="/upload/**" />
+	<mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**" />
+	
+	<!--  <mvc:resources location="{upload}" mapping="/webjars/**" />
+	<mvc:resources location="{tmpUpload}" mapping="/webjars/**" /> -->
+	
+<!-- 	
+ 	<bean id="jsonMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+	<bean id="pageJsonReport"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<property name="objectMapper" ref="jsonMapper" />
+		<property name="contentType" value="application/json;charset=UTF-8"></property>
+	</bean> -->
+
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+ 	
+	<bean id="ViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>
+	</bean>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+		<property name="order" value="1"/>
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" /> 
+
+	</bean>
+
+
+ <!-- # 파일 업로드를 위한 viewResolver
+	 -->
+<!-- 	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+-->
+<!-- 파일 다운로드 -->
+<!-- 
+	<bean id="download" class="com.mvc.util.DownloadViewer"/>
+ -->
+ 
+<!--  
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+       
+         <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="contentType" value="text/html; charset=UTF-8" />
+          
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <ref bean="jsonView" />
+            </list>
+        </property>
+    </bean> -->
+
+
+</beans> 	

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.todo.repository.TodoDao">
+	<resultMap type="todo" id="todoResult"></resultMap>
+	<resultMap type="part" id="partResult"></resultMap>
+	<resultMap type="partplace" id="partplaceResult"></resultMap>
+	<select id="getTotalCnt" resultType="int">
+		SELECT COUNT(IDX) as cnt FROM todo
+	</select>
+
+	<select id="getList" parameterType="noticesch" resultMap="todoResult">
+		SELECT * FROM (Select A.*,C.name,D.place from
+			(select idx, writer,title,content,dday,state,cCode,pCode from todo) A
+						inner join todo B on A.idx = B.idx
+						inner join part C on A.cCode = C.cCode 
+						inner join partPlace D on A.pCode =D.pCode 
+						order by B.idx DESC) X LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="getPartName" resultMap="partResult">
+		SELECT name FROM part GROUP BY NAME
+	</select>
+	
+	<select id="getPlace" parameterType="string"  resultMap="partplaceResult">
+		SELECT pCode,place FROM partPlace
+		WHERE pCode IN(SELECT pCode FROM part WHERE NAME =#{name})
+	</select>
+	
+	<insert id="insertToDo" parameterType="todo" >
+			INSERT INTO todo
+			VALUES(idx,#{writer},#{title},#{content},SYSDATE(),
+			0,(SELECT cCode FROM part WHERE NAME=#{name} AND pCode=#{pCode}),#{pCode})
+	</insert>
+	
+	<update id="updateState" parameterType="todo">
+			<if test="state==0 and state eq 0">
+				update todo set state =#{state}
+				where idx=#{idx}
+			</if>
+			<if test="state==1 and state eq 1">
+				UPDATE todo a
+					INNER JOIN part b ON a.cCode = b.cCode
+					INNER JOIN partPlace c ON a.pCode = c.pCode
+					SET a.state=1, c.counting = c.counting+1
+					WHERE a.idx=#{idx}
+			</if>
+	</update>
+	
+	<delete id="inPlaceDelete" parameterType="string">
+				DELETE a FROM partPlace a
+					INNER JOIN todo b ON a.pCode = b.pCode
+					WHERE a.place =#{place}
+	</delete>
+	
+	<delete id="delete" parameterType="int">
+		delete from todo where idx=#{idx}
+	</delete>
+	
+	<select id="cntLog" parameterType="string" resultType="todo">
+			SELECT A.pCode,A.place,A.counting as count from partPlace A
+			WHERE A.place=#{place}
+	</select>	
+	
+	
+</mapper>

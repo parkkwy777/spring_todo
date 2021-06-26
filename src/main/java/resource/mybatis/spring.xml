@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  
+  <configuration>
+ 	<typeAliases>
+ 	 	<typeAlias alias="todo" type="spring.todo.vo.TodoVo"/>
+ 	 	<typeAlias alias="noticesch" type="spring.todo.vo.NoticeSch"/>
+ 		<typeAlias alias="part" type="spring.todo.vo.PartVo"/>
+ 		<typeAlias alias="partplace" type="spring.todo.vo.PlaceVo"/>
+ 	
+ 		<typeAlias alias="notice" type="spring.todo.vo.NoticeVo"/> 		
+ 	
+ 	</typeAliases>
+ 	<mappers>
+ 		<mapper resource="resource/mybatis/todoMapper.xml"/>
+ 		<mapper resource="resource/mybatis/noticeMapper.xml"/>
+ 	</mappers> 
+  </configuration>
