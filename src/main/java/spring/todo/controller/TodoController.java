@@ -30,26 +30,10 @@ public class TodoController {
 	
 	@RequestMapping("/insert")
 	public String todoInsert(TodoVo vo, Model d){
+		
 		d.addAttribute("insRs", service.insertToDo(vo));
-		return "toDoView";
-	}
 	
-	@RequestMapping("/login")
-	public String login(Member member,Model d){
-		
-		d.addAttribute("loginMember", service.login_proc(member));
-		System.out.println(service.login_proc(member));
-		return "login";
-	}
-
-	
-	@RequestMapping("/login_proc")
-	public String loginProc(Member member,Model d){
-		
-		d.addAttribute("loginMember", service.login_proc(member));
-		System.out.println(service.login_proc(member));
-		
-		return "result";
+	return "toDoView";
 	}
 	
 }

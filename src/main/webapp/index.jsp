@@ -1,6 +1,6 @@
 <html>
 <script type="text/javascript">
-	location.href="/todo/login";
+	location.href="/todo/view";
 </script>
 <body>
 </body>

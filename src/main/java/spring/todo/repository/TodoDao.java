@@ -45,7 +45,5 @@ public interface TodoDao {
 	//분류와 장소에 따른 할일 수행 count
 	public TodoVo cntLog(String place);
 	
-	//로그인
-	public Member login_proc(Member member);
 
 }

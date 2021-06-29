@@ -97,10 +97,7 @@ public class TodoService {
 		return dao.delete(idx);
 	}
 	
-	public Member login_proc(Member member){
-		return dao.login_proc(member);
-	}
-	
+
 	
 	private String toStr(String str) {
 		return str==null?"":str;

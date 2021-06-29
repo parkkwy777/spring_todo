@@ -17,5 +17,6 @@
  	<mappers>
  		<mapper resource="resource/mybatis/todoMapper.xml"/>
  		<mapper resource="resource/mybatis/noticeMapper.xml"/>
+ 		<mapper resource="resource/mybatis/memberMapper.xml"/>
  	</mappers> 
   </configuration>

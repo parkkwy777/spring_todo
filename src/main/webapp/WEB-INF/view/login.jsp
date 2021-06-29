@@ -24,21 +24,22 @@
     </div>
 
     <!-- Login Form -->
-    <form id="loginFrm" method="post" action="/todo/login">
-    
-      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-      
+    <form id="loginFrm" method="post" action="/todo/view">
+         
       <input type="text" id="login" class="fadeIn second" name="id" placeholder="id">
-      <input type="text" id="password" class="fadeIn third" name="pwd" placeholder="password">
+      <input type="password" id="password" class="fadeIn third" name="pwd" placeholder="password">
       <input type="submit" id="loginBtn" class="fadeIn fourth" value="Log In">
+    	  <p>Your login attempt was not successful due to <br/>
+            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+    
     </form>
-	<h1>
-	아이디: ${loginMember.id}
+<%-- 	<h1>
+	아이디: ${use}
 	비밀번호:${loginMember.pwd}
-	</h1>
+	</h1> --%>
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">todo</a>
+      <a class="underlineHover" href="/member/join">가입하기</a>
     </div>
 
   </div>

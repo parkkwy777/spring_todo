@@ -25,7 +25,7 @@
 		</div>
 		 -->
 		 
-		 	<h1>toDo 🥰<button style="float:right;" type="button" class="btn btn-danger">Danger</button></h1>
+		 	<h1>toDo 🥰<button style="float:right;" type="button" id="logoutBtn" class="btn btn-danger">로그아웃</button></h1>
 			
 			<form id="noticeFrm" method="get" action="">
 				<table class="table table-bordered table-hover text-center">
@@ -134,8 +134,6 @@
 		var placeLogParam = "${param.placeLog}";
 		var error ="${param.error}";
 		
-		alert(error);
-		
 		if(!placeLogParam== ""){
 			logTxt(placeLogParam);
 		}
@@ -217,6 +215,10 @@
 		$("#inputBtn").click(function(){
 			$("#inputFrm").attr("action","/todo/insert");
 			$("#inputFrm").submit();
+		});
+		
+		$("#logoutBtn").click(function(){
+				$(location).attr("href","/logout")
 		});
 		
 	});
