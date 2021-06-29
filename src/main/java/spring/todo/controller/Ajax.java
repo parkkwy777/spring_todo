@@ -31,10 +31,8 @@ public class Ajax{
 	@ResponseBody
 	public Boolean state(TodoVo vo){
 		if(service.updateState(vo)>0){
-			System.out.println("?");
 			return true;
 		}else{
-			System.out.println("??");
 			return false;
 		}
 	}
@@ -46,6 +44,7 @@ public class Ajax{
 	}
 	
 	@RequestMapping("/delete")
+	@ResponseBody
 	public Boolean delete(@RequestParam("idx") int idx){
 		if(service.delete(idx)>0){
 			return true;

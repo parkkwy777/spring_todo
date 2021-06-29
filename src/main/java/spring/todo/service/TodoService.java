@@ -2,12 +2,11 @@ package spring.todo.service;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import spring.todo.repository.TodoDao;
+import spring.todo.vo.Member;
 import spring.todo.vo.NoticeSch;
 import spring.todo.vo.PartVo;
 import spring.todo.vo.PlaceVo;
@@ -97,6 +96,11 @@ public class TodoService {
 	public int delete(int idx) {
 		return dao.delete(idx);
 	}
+	
+	public Member login_proc(Member member){
+		return dao.login_proc(member);
+	}
+	
 	
 	private String toStr(String str) {
 		return str==null?"":str;

@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.google.gson.Gson;
 
 import spring.todo.service.TodoService;
+import spring.todo.vo.Member;
 import spring.todo.vo.NoticeSch;
 import spring.todo.vo.TodoVo;
 
@@ -35,5 +33,23 @@ public class TodoController {
 		d.addAttribute("insRs", service.insertToDo(vo));
 		return "toDoView";
 	}
+	
+	@RequestMapping("/login")
+	public String login(Member member,Model d){
+		
+		d.addAttribute("loginMember", service.login_proc(member));
+		System.out.println(service.login_proc(member));
+		return "login";
+	}
 
+	
+	@RequestMapping("/login_proc")
+	public String loginProc(Member member,Model d){
+		
+		d.addAttribute("loginMember", service.login_proc(member));
+		System.out.println(service.login_proc(member));
+		
+		return "result";
+	}
+	
 }

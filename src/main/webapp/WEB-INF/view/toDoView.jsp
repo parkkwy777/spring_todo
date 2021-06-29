@@ -132,6 +132,9 @@
 
 	$(document).ready(function(){
 		var placeLogParam = "${param.placeLog}";
+		var error ="${param.error}";
+		
+		alert(error);
 		
 		if(!placeLogParam== ""){
 			logTxt(placeLogParam);
@@ -194,7 +197,7 @@
 				url:"/ajax/delete",
 				data:{idx:idx},
 				success:function(data){
-					if(data=="true"){
+					if(data==true){
 						$(location).attr("href","/todo/view");
 					}else{
 						alert("실패");

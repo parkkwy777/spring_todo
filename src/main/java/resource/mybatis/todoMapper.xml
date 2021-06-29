@@ -61,5 +61,11 @@
 			WHERE A.place=#{place}
 	</select>	
 	
+	<select id="login_proc" resultType="member" parameterType="member">
+		SELECT *FROM member 
+		WHERE id=#{id}
+		AND pwd=#{pwd}
+	</select>
+	
 	
 </mapper>

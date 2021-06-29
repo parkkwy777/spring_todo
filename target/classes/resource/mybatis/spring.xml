@@ -10,8 +10,8 @@
  	 	<typeAlias alias="noticesch" type="spring.todo.vo.NoticeSch"/>
  		<typeAlias alias="part" type="spring.todo.vo.PartVo"/>
  		<typeAlias alias="partplace" type="spring.todo.vo.PlaceVo"/>
- 	
- 		<typeAlias alias="notice" type="spring.todo.vo.NoticeVo"/> 		
+ 		<typeAlias alias="notice" type="spring.todo.vo.NoticeVo"/> 	
+ 		<typeAlias alias="member" type="spring.todo.vo.Member"/>	
  	
  	</typeAliases>
  	<mappers>

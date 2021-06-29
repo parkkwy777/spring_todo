@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import spring.todo.vo.Member;
 import spring.todo.vo.NoticeSch;
 import spring.todo.vo.PartVo;
 import spring.todo.vo.PlaceVo;
@@ -43,5 +44,8 @@ public interface TodoDao {
 
 	//분류와 장소에 따른 할일 수행 count
 	public TodoVo cntLog(String place);
+	
+	//로그인
+	public Member login_proc(Member member);
 
 }
