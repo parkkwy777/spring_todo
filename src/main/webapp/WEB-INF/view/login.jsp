@@ -56,7 +56,7 @@
 				return false;
 			}
 			if( $("[name=pwd]").val()==null || $("[name=pwd]").val()=="" ){
-				alert("패스워드를 입력하세요");				
+				alert("패스워드를 입력하세요!!");				
 				$("[name=pwd]").focus();	
 				return false;
 			}
