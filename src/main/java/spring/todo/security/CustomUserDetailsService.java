@@ -45,7 +45,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 			securityUser.setAuthorities(authorities);
 			System.out.println(securityUser.toString());
 		} 
-		
+		 
 		return securityUser;
 	}
 
