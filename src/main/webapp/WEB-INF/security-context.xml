@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+<security:http auto-config="true">
+	<security:intercept-url pattern="/todo/view" access="hasRole('MEMBER')"/>
+	<!-- 로그인 설정 -->
+	<!-- * username-parameter : 입력한 ID에 대한 파라미터 네임
+
+		* password-parameter : 입력한 PW에 대한 파라미터 네임
+		
+		* login-processing-url : View 페이지의 <form action="/url"> 에서 지정한 URL
+		
+		* login-page : 서블릿에 넘겨줄 로그인 페이지 URL
+		
+		* default-target-url : 로그인에 성공하면 보내줄 페이지
+
+		* authentication-failure-url : 로그인에 실패하면 보내줄 페이지
+	 -->
+	<security:form-login
+	
+		username-parameter="id"
+		password-parameter="pwd"
+		login-processing-url="/member/login"	
+		login-page="/member/login"		
+		default-target-url="/todo/view"
+		authentication-failure-handler-ref="userLoginFailHandler"
+	/>
+	<security:logout
+		logout-url="/member/logout"
+		logout-success-url="/member/login"
+		invalidate-session="true"	
+	/>
+
+</security:http>
+<!-- DB 연동 설정 -->
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>

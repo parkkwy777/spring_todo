@@ -68,6 +68,9 @@
                             가입취소<i class="fa fa-times spaceLeft"></i>
                         </button>
                     </div>
+                    
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
                 </form>
             </div>
 

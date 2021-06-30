@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,12 +25,12 @@
     </div>
 
     <!-- Login Form -->
-    <form id="loginFrm" method="post" action="/todo/view">
-         
+    <form id="loginFrm" method="post" action="/member/login">
+      <sec:csrfInput />  
       <input type="text" id="login" class="fadeIn second" name="id" placeholder="id">
       <input type="password" id="password" class="fadeIn third" name="pwd" placeholder="password">
       <input type="submit" id="loginBtn" class="fadeIn fourth" value="Log In">
-    	  <p>Your login attempt was not successful due to <br/>
+    	  <p>${requestScope.loginFailMsg} <br/>
             ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
     
     </form>

@@ -2,9 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/webjars/bootstrap/4.5.2/css/bootstrap.css" />
@@ -24,8 +29,12 @@
 		</div>
 		</div>
 		 -->
-		 
-		 	<h1>toDo 🥰<button style="float:right;" type="button" id="logoutBtn" class="btn btn-danger">로그아웃</button></h1>
+		 <form id="logout" method="post" action="/member/logout">
+		 <sec:csrfInput /> <!--csrf토큰이 있어야 다른 페이지와의 요청이 다르게 작동할수있다. 구분값
+		 						또한 post로 전송해야 시큐리티가 인식한다.-->
+		 	<h1>toDo 🥰 <button style="float:right;" type="button" id="logoutBtn" class="btn btn-danger">로그아웃</button>
+    		</h1></form>
+
 			
 			<form id="noticeFrm" method="get" action="">
 				<table class="table table-bordered table-hover text-center">
@@ -97,6 +106,7 @@
 		<br> 
 		 <form id="inputFrm" method="post" action="">
 			<input type="hidden" name="proc" value="insert">
+			<sec:csrfInput />
 			<div class="input-group mb-3">
 			<h1>input</h1>
 				<div style="width:100%;">
@@ -173,6 +183,9 @@
 				url:"/ajax/state",
 				data:{idx:idx, state:state},
 				dataType:"json",
+				beforeSend : function(xhr){		//스프링시큐리티 방식 사용하기위해 토큰정보 전송
+					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
 				success:function(data){
 					if(data==true){
 						$(location).attr("href","/todo/view?placeLog="+placeLog);
@@ -193,7 +206,10 @@
 			$.ajax({
 				type:"post",
 				url:"/ajax/delete",
-				data:{idx:idx},
+				data:{idx:idx},	
+				beforeSend : function(xhr){		//스프링시큐리티 방식 사용하기위해 토큰정보 전송
+					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
 				success:function(data){
 					if(data==true){
 						$(location).attr("href","/todo/view");
@@ -217,8 +233,12 @@
 			$("#inputFrm").submit();
 		});
 		
+		
 		$("#logoutBtn").click(function(){
-				$(location).attr("href","/logout")
+				if(!confirm("로그아웃하시겠습니까?")){
+					return false;
+				}
+				$("#logout").submit();
 		});
 		
 	});
@@ -226,12 +246,16 @@
 	
 function place(){
 	
-	var name= $("#part").val()==null?0:$("#part").val();    
-
+	var name= ($("#part").val()==null?0:$("#part").val());    
+	console.log(name);
+	
 	$.ajax({
 		type:"post",
 		url:"/ajax/place",
 		data:{name:name},
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(data){
 			for(var i in data.place){	
 				$("#place").append("<option value="+data.place[i].pCode+">"+data.place[i].place+"</option>");

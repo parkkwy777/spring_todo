@@ -21,7 +21,6 @@ public class Ajax{
 	
 	@RequestMapping("/place")
 	public String place(@RequestParam("name") String name, Model d){
-		
 		d.addAttribute("place", service.getPlace(name));
 		
 		return "jsonView";
@@ -30,9 +29,12 @@ public class Ajax{
 	@RequestMapping("/state")
 	@ResponseBody
 	public Boolean state(TodoVo vo){
+		System.out.println(vo.toString());
 		if(service.updateState(vo)>0){
+			System.out.println("success");
 			return true;
 		}else{
+			System.out.println("fail");
 			return false;
 		}
 	}
