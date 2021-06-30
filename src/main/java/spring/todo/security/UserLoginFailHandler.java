@@ -40,9 +40,10 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 			
 		} else if(exception instanceof AccountExpiredException) {
 			request.setAttribute("loginFailMsg", "만료된 계정입니다..");
-			
 		} else if(exception instanceof CredentialsExpiredException) {
 			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
+		}else{
+			System.out.println(exception);
 		}
 		
 		// 로그인 페이지로 다시 포워딩

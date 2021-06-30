@@ -27,22 +27,23 @@ public class CustomUserDetailsService implements UserDetailsService{
 		// TODO Auto-generated method stub
 		
 		System.out.println("username:"+ username);
-		SecurityUser  securityUser = new SecurityUser();
+		Member  securityUser = new Member();
 		Member member = dao.login(username); 
 		
 		if(member !=null){
 			System.out.println(member.getId());
 			System.out.println(member.getPwd());
 			System.out.println(member.getAuth());
-			System.out.println(member.toString());
-			securityUser.setUsername(member.getId());
-			securityUser.setPassword(member.getPwd());
+			
+			securityUser.setId(member.getId());
+			securityUser.setPwd(member.getPwd());
 
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
 			authorities.add(new SimpleGrantedAuthority(member.getAuth()));
 			
 			securityUser.setAuthorities(authorities);
+			System.out.println(securityUser.toString());
 		}
 		
 		return securityUser;

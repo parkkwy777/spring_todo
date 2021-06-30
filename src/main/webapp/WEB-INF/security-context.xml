@@ -5,7 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-<security:http auto-config="true">
+<security:http auto-config="true" use-expressions="true">
+	<security:intercept-url pattern="/todo/insert" access="hasIpAddress('106.247.251.242') or hasIpAddress('192.164.1.0/24')"/>
 	<security:intercept-url pattern="/todo/view" access="hasRole('MEMBER')"/>
 	<!-- 로그인 설정 -->
 	<!-- * username-parameter : 입력한 ID에 대한 파라미터 네임
